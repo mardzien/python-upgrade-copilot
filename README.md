@@ -16,6 +16,7 @@ uv sync
 uv run pytest
 uv run ruff check . && uv run ruff format --check .
 uv run mypy
+uv run ty check  # optional second checker, non-blocking in CI
 ```
 
 ## How this project was built

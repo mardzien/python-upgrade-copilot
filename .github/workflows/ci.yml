@@ -31,5 +31,10 @@ jobs:
       - name: Type check
         run: uv run mypy
 
+      # ty is pre-1.0, so it reports but does not block merges yet.
+      - name: Type check (ty, non-blocking)
+        continue-on-error: true
+        run: uv run ty check
+
       - name: Tests
         run: uv run pytest
