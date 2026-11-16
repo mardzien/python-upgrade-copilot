@@ -1,2 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.cache/
+
+# Local secrets
+.env
+
+# Private working material (never published)
 .learning/
 .superpowers/
