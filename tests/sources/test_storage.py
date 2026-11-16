@@ -46,6 +46,13 @@ def test_roundtrip(tmp_path: Path) -> None:
     assert manifest["count"] == 2
 
 
+def test_saved_files_are_world_readable(tmp_path: Path) -> None:
+    save_documents(DOCS, tmp_path, fetched_at=FETCHED_AT)
+
+    modes = {p.name: p.stat().st_mode & 0o777 for p in tmp_path.iterdir()}
+    assert modes == {DOCUMENTS_FILE: 0o644, MANIFEST_FILE: 0o644}
+
+
 def test_fetched_at_is_stored_in_utc(tmp_path: Path) -> None:
     warsaw = timezone(timedelta(hours=1))
 

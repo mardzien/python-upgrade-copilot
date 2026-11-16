@@ -106,4 +106,6 @@ def _write_temp(directory: Path, data: bytes) -> Path:
     fd, name = tempfile.mkstemp(dir=directory, prefix=".tmp-", suffix=".part")
     with os.fdopen(fd, "wb") as handle:
         handle.write(data)
+    # mkstemp creates owner-only files; the stored set is meant to be shared.
+    os.chmod(name, 0o644)
     return Path(name)
