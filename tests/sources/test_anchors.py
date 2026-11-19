@@ -1,6 +1,22 @@
 import pytest
 
-from upgrade_copilot.sources.anchors import AnchorRegistry, heading_anchor
+from upgrade_copilot.sources.anchors import AnchorRegistry, heading_anchor, heading_text
+
+
+@pytest.mark.parametrize(
+    ("heading", "expected"),
+    [
+        ("Changes to `pydantic.BaseModel`", "Changes to pydantic.BaseModel"),
+        (
+            'Implementing `__get_validators__` <a name="implementing_get"></a>',
+            "Implementing __get_validators__",
+        ),
+        ("See [the API docs](https://example.com) for more", "See the API docs for more"),
+        ("Types &amp;  aliases ", "Types & aliases"),
+    ],
+)
+def test_heading_text_is_what_the_reader_sees(heading: str, expected: str) -> None:
+    assert heading_text(heading) == expected
 
 
 @pytest.mark.parametrize(

@@ -37,8 +37,9 @@ class Chunker(Protocol):
               anchor the published documentation uses.
             * Lines inside fenced code blocks are never treated as headings,
               and a chunk never splits a code fence open.
-            * ``chunk_id`` is unique within the document and deterministic:
-              chunking the same document twice yields the same identifiers.
+            * ``chunk_id`` is unique across documents (a verifier matches
+              quotes from several pages by it) and deterministic: chunking
+              the same document twice yields the same identifiers.
             * Metadata (``library``, ``migration_key``, ``doc_version``,
               ``source_ref``) is copied from ``doc``.
 

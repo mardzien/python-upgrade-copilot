@@ -16,15 +16,36 @@ _LINK = re.compile(r"!?\[([^\]]*)\](?:\([^)]*\)|\[[^\]]*\])")
 _HTML_TAG = re.compile(r"<[^>]+>")
 _NON_WORD = re.compile(r"[^\w\s-]")
 _SEPARATORS = re.compile(r"[-\s]+")
+_WHITESPACE = re.compile(r"\s+")
 _NUMBERED = re.compile(r"^(.*)_([0-9]+)$")
+
+
+def heading_text(heading: str) -> str:
+    """Return a Markdown heading as the reader sees it on the page.
+
+    Code spans keep their content, links keep their label, HTML tags are
+    dropped, entities are decoded and runs of whitespace collapse to one space.
+
+    Args:
+        heading: Heading text without the leading ``#`` characters.
+
+    Returns:
+        E.g. ``"Changes to pydantic.BaseModel"`` for
+        ``"Changes to `pydantic.BaseModel`"``.
+    """
+    text = _CODE_SPAN.sub(r"\1", heading)
+    text = _LINK.sub(r"\1", text)
+    text = _HTML_TAG.sub("", text)
+    text = html.unescape(text)
+    return _WHITESPACE.sub(" ", text).strip()
 
 
 def heading_anchor(heading: str) -> str:
     """Return the anchor MkDocs generates for a Markdown heading.
 
-    The heading text is first reduced to what the reader sees (code spans keep
-    their content, links keep their label, HTML tags are dropped), then
-    slugified the way ``markdown.extensions.toc.slugify`` does it.
+    The heading is first reduced to what the reader sees (see
+    :func:`heading_text`), then slugified the way
+    ``markdown.extensions.toc.slugify`` does it.
 
     Args:
         heading: Heading text without the leading ``#`` characters.
@@ -33,10 +54,7 @@ def heading_anchor(heading: str) -> str:
         The anchor, e.g. ``"changes-to-pydanticbasemodel"`` for
         ``"Changes to `pydantic.BaseModel`"``.
     """
-    text = _CODE_SPAN.sub(r"\1", heading)
-    text = _LINK.sub(r"\1", text)
-    text = _HTML_TAG.sub("", text)
-    text = html.unescape(text)
+    text = heading_text(heading)
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
     text = _NON_WORD.sub("", text).strip().lower()
     return _SEPARATORS.sub("-", text)
