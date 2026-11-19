@@ -1,0 +1,21 @@
+{
+  "library": "pydantic",
+  "migration_key": "1_to_2",
+  "source_refs": [
+    "v2.14.3@ea492e04654ab7f7a1f9287ea912419452ead4dd"
+  ],
+  "paths": [
+    "docs/migration.md",
+    "docs/concepts/models.md",
+    "docs/concepts/validators.md",
+    "docs/concepts/config.md",
+    "docs/concepts/fields.md",
+    "docs/concepts/serialization.md",
+    "docs/concepts/json_schema.md",
+    "docs/concepts/dataclasses.md",
+    "docs/concepts/pydantic_settings.md"
+  ],
+  "fetched_at": "2026-11-16T22:12:09.245317+00:00",
+  "count": 9,
+  "documents_sha256": "cb030739a7e318607b745af1843919f9c7cb92edfbbe289a4dbfe94b79c720ea"
+}

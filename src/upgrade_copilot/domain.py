@@ -40,7 +40,7 @@ class SourceDocument:
     Attributes:
         library: Library the page documents (e.g. ``"pydantic"``).
         migration_key: Migration the page belongs to (e.g. ``"1_to_2"``).
-        doc_version: Documentation version shown on the site (e.g. ``"2.14"``).
+        doc_version: Library release the page was taken from (e.g. ``"2.14.3"``).
         doc_path: Path of the Markdown source inside the library repository.
         title: Page title.
         canonical_url: Public URL of the rendered page, without an anchor.
